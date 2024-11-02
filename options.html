@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>GPT Search 设置</title>
+    <style>
+        body {
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"] {
+            width: 300px;
+            padding: 5px;
+        }
+        button {
+            padding: 8px 15px;
+            margin-right: 10px;
+        }
+        .status {
+            margin-top: 10px;
+            color: green;
+            display: none;
+        }
+        .warning {
+            color: #ff6b6b;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h2>GPT Search 设置</h2>
+    <div class="form-group">
+        <label for="defaultPrompt">默认提示词: 会自动拼接在查询内容前</label>
+        <input type="text" id="defaultPrompt" placeholder="输入默认提示词">
+    </div>
+    <div class="form-group">
+        <label for="url">URL: {question} 作为查询内容占位符</label>
+        <input type="text" id="url" placeholder="输入 API URL，使用 {question} 作为查询占位符">
+    </div>
+    <div class="form-group">
+        <button id="save">保存</button>
+        <button id="reset">重置</button>
+    </div>
+    <div id="status" class="status">设置已保存</div>
+
+    <script src="options.js"></script>
+</body>
+</html> 
