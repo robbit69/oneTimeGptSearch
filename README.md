@@ -38,6 +38,7 @@ Come try this extension and curb OpenAI's unethical practices.
 4. 开启右上角的"开发者模式"
 5. 点击"加载已解压的扩展程序"
 6. 选择下载或解压出的代码文件夹
+注意：和官方拓展同时使用可能会导致自定义 URL 功能不好使
 
 (Only manual installation, uploading to the extension store takes too much time)  
 1. Download the code from this repository or download the compressed package from Releases  
@@ -45,6 +46,7 @@ Come try this extension and curb OpenAI's unethical practices.
 4. Turn on "Developer mode" in the upper right corner  
 5. Click "Load unpacked"  
 6. Select the folder of the downloaded or extracted code
+Note: Using it simultaneously with official extensions may cause the custom URL feature to malfunction.
 
 ## 使用方法 / How to Use
 
