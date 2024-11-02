@@ -52,7 +52,8 @@ Come try this extension and curb OpenAI's unethical practices.
 - 在地址栏输入 `g` 然后按空格 / Type `g` in the address bar and press space
 - 输入要搜索的内容 / Enter the content you want to search
 - 按回车进行搜索  / Press Enter to start the search
-![image](https://github.com/user-attachments/assets/f0a6751d-5eeb-4497-a1ec-e9698892d89d)
+![image](https://github.com/user-attachments/assets/846893dc-5da5-45c0-baef-823a153b748e)
+
 
 ### 2. 快捷键搜索 / Search via Shortcut Key
 - 选中文本后按 `Alt+G` / Select the text and press `Alt+G`
@@ -62,7 +63,8 @@ Come try this extension and curb OpenAI's unethical practices.
 - 选中文本 / Select the text
 - 右键点击 / Right-click
 - 选择 "使用 GPT 搜索" / Choose "使用 GPT 搜索"
-![image](https://github.com/user-attachments/assets/22cabb66-f790-4c1d-b3f3-f00cb647bae7)
+![image](https://github.com/user-attachments/assets/e0ca8373-6ab1-4f33-bca0-38648b12e989)
+
 
 
 ## 自定义设置 / Custom Settings
@@ -72,8 +74,8 @@ Come try this extension and curb OpenAI's unethical practices.
    - 默认提示词（会自动拼接在查询内容前）/ Default prompt (will be automatically prepended to the query content)
    - 自定义 URL（使用 {question} 作为查询内容占位符）/ Custom URL (use {question} as a placeholder for query content)
    - 自定义 URL 的功能最适合 linux.do 佬友们 / The custom URL feature is particularly suited for Linux enthusiasts on linux.do
+![image](https://github.com/user-attachments/assets/fa0dd725-1f05-4802-9944-5cb4b95d6aae)
 
-![image](https://github.com/user-attachments/assets/c2168fe1-502a-4fd8-b00d-6c4e316be9f2)
 
 ## 其他 | Orther
 
