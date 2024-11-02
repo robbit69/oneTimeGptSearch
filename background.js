@@ -1,7 +1,7 @@
 // 添加默认设置定义
 const defaultSettings = {
     triggerWord: 'g',
-    defaultPrompt: 'Please search and answer: ',
+    defaultPrompt: 'Ask: ',
     url: 'https://chatgpt.com/?q={question}&hints=search',
     showContextMenu: true
 };
