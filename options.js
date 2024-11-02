@@ -8,14 +8,12 @@ const defaultSettings = {
 
 // 保存设置
 function saveOptions() {
-    const triggerWord = document.getElementById('triggerWord').value;
     const defaultPrompt = document.getElementById('defaultPrompt').value;
     const url = document.getElementById('url').value;
 
     chrome.storage.sync.set({
         searchSettings: {
             ...defaultSettings,
-            triggerWord: triggerWord || defaultSettings.triggerWord,
             defaultPrompt: defaultPrompt || defaultSettings.defaultPrompt,
             url: url || defaultSettings.url
         }
