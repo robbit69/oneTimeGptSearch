@@ -33,18 +33,18 @@ Come try this extension and curb OpenAI's unethical practices.
 
 ## 安装方法 Installation Method
 （仅有手动安装，上架到拓展商店太耗时间）
-1. 下载本仓库代码
-2. 打开 Chrome 浏览器，进入扩展管理页面 (`chrome://extensions/`)
-3. 开启右上角的"开发者模式"
-4. 点击"加载已解压的扩展程序"
-5. 选择下载的代码文件夹
+1. 下载本仓库代码或下载 Releases 中的压缩包
+3. 打开 Chrome 浏览器，进入扩展管理页面 (`chrome://extensions/`)
+4. 开启右上角的"开发者模式"
+5. 点击"加载已解压的扩展程序"
+6. 选择下载或解压出的代码文件夹
 
-(Manual installation only; getting it on the extension store takes too much time)
-1. Download the code from this repository.
-2. Open the Chrome browser and navigate to the extensions management page (`chrome://extensions/`).
-3. Enable "Developer mode" in the top right corner.
-4. Click "Load unpacked extension".
-5. Select the downloaded code folder.
+(Only manual installation, uploading to the extension store takes too much time)  
+1. Download the code from this repository or download the compressed package from Releases  
+3. Open the Chrome browser and go to the extension management page (`chrome://extensions/`)  
+4. Turn on "Developer mode" in the upper right corner  
+5. Click "Load unpacked"  
+6. Select the folder of the downloaded or extracted code
 
 ## 使用方法 / How to Use
 
