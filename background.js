@@ -31,22 +31,28 @@ function updateContextMenu() {
 // 初始化
 chrome.runtime.onInstalled.addListener(() => {
     // 初始化设置
-    chrome.storage.sync.get('searchSettings', (result) => {
+    chrome.storage.sync.get('searchSettings', async (result) => {
         if (!result.searchSettings) {
-            chrome.storage.sync.set({
+            await chrome.storage.sync.set({
                 searchSettings: defaultSettings
             });
         }
+        // 确保在设置完成后立即加载设置
+        await loadSettings();
     });
-    loadSettings();
 });
 
 // 监听设置更新
-chrome.runtime.onMessage.addListener((message) => {
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.type === 'settingsUpdated') {
+        // 立即重新加载设置
         loadSettings();
+        // 可选：添加响应确认
+        sendResponse({ status: 'success' });
     }
+    return true; // 保持消息通道开放
 });
+
 
 // 处理右键菜单点击
 chrome.contextMenus.onClicked.addListener((info, tab) => {
