@@ -1,24 +1,33 @@
-// 添加默认设置定义
-const defaultSettings = {
-    triggerWord: 'g',
-    defaultPrompt: 'Ask: ',
-    url: 'https://chatgpt.com/?q={question}&hints=search',
-    showContextMenu: true
-};
+let searchSettings = null;
 
-let searchSettings = defaultSettings;
+// 初始化
+chrome.runtime.onInstalled.addListener(() => {
+    loadSettings();
+});
 
 // 加载设置
 async function loadSettings() {
     const result = await chrome.storage.sync.get('searchSettings');
-    searchSettings = result.searchSettings || defaultSettings;
+    if (!result.searchSettings) {
+        // 如果没有保存的设置，创建默认设置
+        const defaultSettings = {
+            triggerWord: 'g',
+            defaultPrompt: 'ask: ',
+            url: 'https://chatgpt.com/?q={question}&hints=search',
+            showContextMenu: true
+        };
+        await chrome.storage.sync.set({ searchSettings: defaultSettings });
+        searchSettings = defaultSettings;
+    } else {
+        searchSettings = result.searchSettings;
+    }
     updateContextMenu();
 }
 
 // 更新右键菜单
 function updateContextMenu() {
     chrome.contextMenus.removeAll(() => {
-        if (searchSettings.showContextMenu) {
+        if (searchSettings && searchSettings.showContextMenu) {
             chrome.contextMenus.create({
                 id: "gptSearch",
                 title: "使用GPT搜索",
@@ -27,32 +36,15 @@ function updateContextMenu() {
         }
     });
 }
-
-// 初始化
-chrome.runtime.onInstalled.addListener(() => {
-    // 初始化设置
-    chrome.storage.sync.get('searchSettings', async (result) => {
-        if (!result.searchSettings) {
-            await chrome.storage.sync.set({
-                searchSettings: defaultSettings
-            });
-        }
-        // 确保在设置完成后立即加载设置
-        await loadSettings();
-    });
-});
-
 // 监听设置更新
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.type === 'settingsUpdated') {
-        // 立即重新加载设置
-        loadSettings();
-        // 可选：添加响应确认
-        sendResponse({ status: 'success' });
+        // 直接使用从 options 传来的设置
+        searchSettings = message.settings;
+        updateContextMenu();
     }
     return true; // 保持消息通道开放
 });
-
 
 // 处理右键菜单点击
 chrome.contextMenus.onClicked.addListener((info, tab) => {
