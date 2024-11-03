@@ -6,33 +6,36 @@ const defaultSettings = {
     showContextMenu: true
 };
 
-// 在用设置
-let currentSettings = {...defaultSettings};
-
 // 保存设置
 function saveOptions() {
     const defaultPrompt = document.getElementById('defaultPrompt').value;
     const url = document.getElementById('url').value;
 
-    // 更新在用设置
-    currentSettings = {
-        ...currentSettings,
-        defaultPrompt: defaultPrompt || defaultSettings.defaultPrompt,
-        url: url || defaultSettings.url
-    };
+    // 直接从存储获取当前设置，更新后保存
+    chrome.storage.sync.get('searchSettings', (result) => {
+        const currentSettings = result.searchSettings || {...defaultSettings};
+        const newSettings = {
+            ...currentSettings,
+            defaultPrompt: defaultPrompt || defaultSettings.defaultPrompt,
+            url: url || defaultSettings.url
+        };
 
-    // 保存在用设置到存储
-    chrome.storage.sync.set({
-        searchSettings: currentSettings
-    }, () => {
-        // 发送消息通知 background.js 更新设置
-        chrome.runtime.sendMessage({ type: 'settingsUpdated', settings: currentSettings });
-        
-        const status = document.getElementById('status');
-        status.style.display = 'block';
-        setTimeout(() => {
-            status.style.display = 'none';
-        }, 2000);
+        // 保存新设置到存储
+        chrome.storage.sync.set({
+            searchSettings: newSettings
+        }, () => {
+            // 通知 background.js
+            chrome.runtime.sendMessage({ 
+                type: 'settingsUpdated', 
+                settings: newSettings 
+            });
+            
+            const status = document.getElementById('status');
+            status.style.display = 'block';
+            setTimeout(() => {
+                status.style.display = 'none';
+            }, 2000);
+        });
     });
 }
 
