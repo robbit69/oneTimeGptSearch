@@ -36,14 +36,14 @@ function updateContextMenu() {
         }
     });
 }
-
 // 监听设置更新
-chrome.runtime.onMessage.addListener((message) => {
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.type === 'settingsUpdated') {
         // 直接使用从 options 传来的设置
         searchSettings = message.settings;
         updateContextMenu();
     }
+    return true; // 保持消息通道开放
 });
 
 // 处理右键菜单点击
