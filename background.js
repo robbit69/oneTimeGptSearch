@@ -1,24 +1,10 @@
-// 添加默认设置定义
-const defaultSettings = {
-    triggerWord: 'g',
-    defaultPrompt: 'Ask: ',
-    url: 'https://chatgpt.com/?q={question}&hints=search',
-    showContextMenu: true
-};
-
-let searchSettings = defaultSettings;
-
-// 加载设置
-async function loadSettings() {
-    const result = await chrome.storage.sync.get('searchSettings');
-    searchSettings = result.searchSettings || defaultSettings;
-    updateContextMenu();
-}
+// 移除默认设置定义,只保留设置变量
+let searchSettings = null;
 
 // 更新右键菜单
 function updateContextMenu() {
     chrome.contextMenus.removeAll(() => {
-        if (searchSettings.showContextMenu) {
+        if (searchSettings && searchSettings.showContextMenu) {
             chrome.contextMenus.create({
                 id: "gptSearch",
                 title: "使用GPT搜索",
@@ -28,23 +14,24 @@ function updateContextMenu() {
     });
 }
 
+// 加载设置
+async function loadSettings() {
+    const result = await chrome.storage.sync.get('searchSettings');
+    searchSettings = result.searchSettings;
+    updateContextMenu();
+}
+
 // 初始化
 chrome.runtime.onInstalled.addListener(() => {
-    // 初始化设置
-    chrome.storage.sync.get('searchSettings', (result) => {
-        if (!result.searchSettings) {
-            chrome.storage.sync.set({
-                searchSettings: defaultSettings
-            });
-        }
-    });
     loadSettings();
 });
 
 // 监听设置更新
 chrome.runtime.onMessage.addListener((message) => {
     if (message.type === 'settingsUpdated') {
-        loadSettings();
+        // 直接使用从 options 传来的设置
+        searchSettings = message.settings;
+        updateContextMenu();
     }
 });
 
