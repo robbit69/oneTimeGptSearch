@@ -1,5 +1,28 @@
-// 移除默认设置定义,只保留设置变量
 let searchSettings = null;
+
+// 初始化
+chrome.runtime.onInstalled.addListener(() => {
+    loadSettings();
+});
+
+// 加载设置
+async function loadSettings() {
+    const result = await chrome.storage.sync.get('searchSettings');
+    if (!result.searchSettings) {
+        // 如果没有保存的设置，创建默认设置
+        const defaultSettings = {
+            triggerWord: 'g',
+            defaultPrompt: 'ask: ',
+            url: 'https://chatgpt.com/?q={question}&hints=search',
+            showContextMenu: true
+        };
+        await chrome.storage.sync.set({ searchSettings: defaultSettings });
+        searchSettings = defaultSettings;
+    } else {
+        searchSettings = result.searchSettings;
+    }
+    updateContextMenu();
+}
 
 // 更新右键菜单
 function updateContextMenu() {
@@ -13,18 +36,6 @@ function updateContextMenu() {
         }
     });
 }
-
-// 加载设置
-async function loadSettings() {
-    const result = await chrome.storage.sync.get('searchSettings');
-    searchSettings = result.searchSettings;
-    updateContextMenu();
-}
-
-// 初始化
-chrome.runtime.onInstalled.addListener(() => {
-    loadSettings();
-});
 
 // 监听设置更新
 chrome.runtime.onMessage.addListener((message) => {
