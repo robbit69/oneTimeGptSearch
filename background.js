@@ -1,50 +1,28 @@
+import { getCurrentSettings } from './settings.js';
+
 let searchSettings = null;
 
 // 初始化
-chrome.runtime.onInstalled.addListener(() => {
-    loadSettings();
-});
-
-// 加载设置
-async function loadSettings() {
-    const result = await chrome.storage.sync.get('searchSettings');
-    if (!result.searchSettings) {
-        // 如果没有保存的设置，创建默认设置
-        const defaultSettings = {
-            triggerWord: 'g',
-            defaultPrompt: 'ask: ',
-            url: 'https://chatgpt.com/?q={question}&hints=search',
-            showContextMenu: true
-        };
-        await chrome.storage.sync.set({ searchSettings: defaultSettings });
-        searchSettings = defaultSettings;
-    } else {
-        searchSettings = result.searchSettings;
-    }
+async function initSettings() {
+    searchSettings = await getCurrentSettings();
     updateContextMenu();
 }
+
+// 初始化调用
+initSettings();
 
 // 更新右键菜单
 function updateContextMenu() {
     chrome.contextMenus.removeAll(() => {
         if (searchSettings && searchSettings.showContextMenu) {
             chrome.contextMenus.create({
-                id: "gptSearch",
+                id: "gptSearch", 
                 title: "使用GPT搜索",
                 contexts: ["selection"]
             });
         }
     });
 }
-
-// 监听设置更新
-chrome.runtime.onMessage.addListener((message) => {
-    if (message.type === 'settingsUpdated') {
-        // 直接使用从 options 传来的设置
-        searchSettings = message.settings;
-        updateContextMenu();
-    }
-});
 
 // 处理右键菜单点击
 chrome.contextMenus.onClicked.addListener((info, tab) => {
@@ -53,16 +31,24 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
     }
 });
 
-// 监听快捷键
+// 监听快捷键命令
 chrome.commands.onCommand.addListener(async (command) => {
     if (command === "trigger-search") {
-        const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-        if (tab && tab.url) {
-            const url = new URL(tab.url);
-            const searchText = url.searchParams.get('q') || tab.title;
-            if (searchText) {
-                openSearch(searchText);
+        try {
+            // 首先获取当前活动标签页
+            const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+            
+            // 然后在该标签页执行脚本
+            const [selection] = await chrome.scripting.executeScript({
+                target: { tabId: tab.id },
+                func: () => window.getSelection().toString()
+            });
+            
+            if (selection && selection.result) {
+                openSearch(selection.result);
             }
+        } catch (error) {
+            console.error('获取选中文本时出错:', error);
         }
     }
 });
@@ -79,4 +65,4 @@ function openSearch(query) {
     const fullQuery = `${searchSettings.defaultPrompt} ${query}`;
     const url = searchSettings.url.replace('{question}', encodeURIComponent(fullQuery));
     chrome.tabs.create({ url });
-} 
+}

@@ -34,15 +34,19 @@
             margin-top: 5px;
         }
     </style>
+    <script type="module" src="options.js"></script>
 </head>
 <body>
     <h2>GPT Search 设置</h2>
     <div class="form-group">
-        <label for="defaultPrompt">默认提示词: 会自动拼接在查询内容前 | Prompt: Automatically added before your search query</label>
+        <label for="defaultPrompt">
+            默认提示词: 会自动拼接在查询内容前<br>
+            Prompt: Automatically added before your search query</label>
         <input type="text" id="defaultPrompt" placeholder="输入默认提示词">
     </div>
     <div class="form-group">
-        <label for="url">URL: {question} 作为查询内容占位符</label>
+        <label for="url">URL: {question} 作为查询内容占位符<br>
+            URL: Use {question} as query placeholder</label>
         <input type="text" id="url" placeholder="输入 URL，使用 {question} 作为查询占位符">
     </div>
     <div class="form-group">
@@ -50,7 +54,5 @@
         <button id="reset">重置 | reset</button>
     </div>
     <div id="status" class="status">设置已保存</div>
-
-    <script src="options.js"></script>
 </body>
 </html> 
