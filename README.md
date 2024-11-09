@@ -1,5 +1,9 @@
 # oneTimeGptSearch | A GPT Quick Search Extension
 
+
+**本项目仅在 [linux.do](https://linux.do/t/topic/249115) 上进行发布，未在其他任何网站发布**
+
+
 一键使用 GPT Search 搜索 | 一个简单高效的 Chrome 扩展，用于按需调用 GPT Search 避免整个浏览器的搜索引擎被官方拓展接管
 
 什么！OpenAI 推出了新产品 GPT Search 还附赠浏览器拓展？
