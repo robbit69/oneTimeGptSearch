@@ -61,7 +61,8 @@ chrome.omnibox.onInputEntered.addListener((text) => {
 });
 
 // 打开搜索
-function openSearch(query) {
+async function openSearch(query) {
+    searchSettings = await getCurrentSettings();
     const fullQuery = `${searchSettings.defaultPrompt} ${query}`;
     const url = searchSettings.url.replace('{question}', encodeURIComponent(fullQuery));
     chrome.tabs.create({ url });
